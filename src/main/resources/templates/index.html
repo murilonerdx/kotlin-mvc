@@ -1,5 +1,6 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -12,11 +13,14 @@
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-          crossorigin="anonymous" th:href="@{css/bootstrap.min.css}">
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"/>
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 
     <!-- Favicon -->
-    <link rel="icon" th:href="@{images/favicon.pgn}" type="image/png" />
+    <link rel="icon" type="image/png" href="../static/images/favicon.png" th:href="@{images/favicon.png}"/>
     <meta name="theme-color" content="#563d7c">
 
 
@@ -39,7 +43,7 @@
     <!-- Custom styles for this template -->
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
     <!-- Custom styles for this template -->
-    <link href="../static/css/blog.css" th:href="@{css/blog.css}" rel="stylesheet" />
+    <link href="../static/css/blog.css" th:href="@{css/blog.css}" rel="stylesheet"/>
 </head>
 <body>
 <div class="container">
@@ -47,14 +51,19 @@
     <header class="blog-header py-3">
         <div class="row flex-nowrap justify-content-between align-items-center">
             <div class="col-4 pt-1">
-                <a class="text-muted" href="#">Subscribe</a>
+                <a class="text-muted" href="#">
+                    <i class="fas fa-id-card"></i>
+                    Subscribe
+                </a>
             </div>
             <div class="col-4 text-center">
-                <!-- <a class="blog-header-logo text-dark" href="#">Large</a> -->
                 <img src="../static/images/blog-logo.png" th:src="@{images/blog-logo.png}" alt="Logo" height="50px"/>
             </div>
             <div class="col-4 d-flex justify-content-end align-items-center">
-                <a class="btn btn-sm btn-outline-secondary" href="#">Sign up</a>
+                <a class="btn btn-sm btn-outline-secondary" href="#">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Sign up
+                </a>
             </div>
         </div>
     </header>
@@ -78,8 +87,8 @@
 
     <div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
         <div class="col-md-6 px-0">
-            <h1 class="display-4 font-italic">Blog Title</h1>
-            <p class="lead my-3">Blog Sub Title.</p>
+            <h1 class="display-4 font-italic" th:text="#{blog.title}">Blog Title</h1>
+            <p class="lead my-3" th:text="#{blog.subTitle}">Blog Sub Title.</p>
         </div>
     </div>
 </div>
@@ -105,28 +114,34 @@
                     fermentum. Aenean lacinia bibendum nulla sed consectetur.</p></div><!-- /.blog-post -->
 
             <nav class="blog-pagination">
-                <a class="btn btn-outline-primary" href="#">Older</a>
-                <a class="btn btn-outline-secondary disabled" href="#" tabindex="-1" aria-disabled="true">Newer</a>
+                <a class="btn btn-outline-primary" href="#"><i class="fas fa-angle-double-left"></i> Older</a>
+                <a class="btn btn-outline-secondary" href="#" tabindex="-1" aria-disabled="true">Newer <i
+                        class="fas fa-angle-double-right"></i></a>
             </nav>
 
         </div><!-- /.blog-main -->
 
         <aside class="col-md-4 blog-sidebar">
             <div class="p-4 mb-3 bg-light rounded">
-                <h4 class="font-italic">About Author</h4>
+                <h4 class="font-italic" th:text="#{author.about}">
+                    <i class="fas fa-user"></i>
+                    About Author
+                </h4>
                 <p class="mb-0">Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus
                     sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
                 <hr/>
-                <h4 class="font-italic">Social Network</h4>
+                <h4 class="font-italic" th:text="#{author.socialNetwork}">
+                    <i class="fas fa-network-wired"></i> Social Network
+                </h4>
                 <ol class="list-unstyled">
-                    <li><a href="#">Facebook</a></li>
-                    <li><a href="#">Twitter</a></li>
-                    <li><a href="#">LinkedIn</a></li>
+                    <li><a href="#"><i class="fab fa-facebook-f"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                    <li><a href="#"><i class="fab fa-linkedin-in"></i> LinkedIn</a></li>
                 </ol>
             </div>
 
             <div class="p-4">
-                <h4 class="font-italic">Archives</h4>
+                <h4 class="font-italic" th:text="#{articles.history}"><i class="fas fa-list"></i> Archives</h4>
                 <ol class="list-unstyled mb-0">
                     <li><a href="#">March 2014</a></li>
                     <li><a href="#">February 2014</a></li>
@@ -142,7 +157,9 @@
 
 <footer class="blog-footer">
     <p>
-        <a href="#">Back to top</a>
+        <a href="#">
+            <i class="fas fa-angle-double-up"></i> Back to top <i class="fas fa-angle-double-up"></i>
+        </a>
     </p>
 </footer>
 </body>
