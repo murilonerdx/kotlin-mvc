@@ -9,6 +9,8 @@ import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.servlet.mvc.support.RedirectAttributes
+import javax.servlet.http.HttpSession
 
 @Controller
 @RequestMapping("/login")
@@ -23,7 +25,7 @@ class LoginController(private val repository: UserRepository) {
     }
 
     @PostMapping
-    fun login(user:User, model : Model): String{
+    fun login(user:User, model : Model, session: HttpSession): String{
         val optional = repository.findByEmail(user.email)
         if(optional.isEmpty){
             model.addAttribute("messageError","Usuário não localizado")
@@ -35,6 +37,13 @@ class LoginController(private val repository: UserRepository) {
             model.addAttribute("messageError","Senha invalida")
             return "login"
         }
+        session.setAttribute("currentUser",userDatabase);
         return "redirect:/"
+    }
+
+    @GetMapping("/logout")
+    fun logout(session: HttpSession):String{
+        session.invalidate()
+        return "redirect:/login"
     }
 }
