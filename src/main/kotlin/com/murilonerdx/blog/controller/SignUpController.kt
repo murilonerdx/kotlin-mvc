@@ -24,15 +24,11 @@ class SignUpController(private val repository: UserRepository) {
 
     @PostMapping
     fun save(user: User, confirmPassword: String, model: Model): String {
-        logger.info("save(${user})...")
-
         if (user.password != confirmPassword) {
             val messageError = "Senha não confere!"
-            logger.error(messageError)
             model.addAttribute("messageError", messageError)
             return "signup"
         }
-
         repository.save(user).also { logger.info(user.toString()) }
         return "redirect:/login"
     }
