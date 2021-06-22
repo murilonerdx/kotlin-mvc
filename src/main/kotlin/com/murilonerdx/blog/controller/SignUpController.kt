@@ -25,8 +25,6 @@ class SignUpController(private val repository: UserRepository) {
     @PostMapping
     fun save(user: User, confirmPassword: String, model: Model): String {
         val optional = repository.findByEmail(user.email)
-        print(optional);
-
         if (user.password != confirmPassword) {
             val messageError = "Senha não confere!"
             model.addAttribute("messageError", messageError)
