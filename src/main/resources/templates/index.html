@@ -97,27 +97,20 @@
             <p class="lead my-3" th:text="#{blog.subTitle}">Blog Sub Title.</p>
         </div>
     </div>
+
 </div>
 
 <main role="main" class="container">
     <div class="row">
         <div class="col-md-8 blog-main">
-            <div class="blog-post">
-                <h1 class="blog-post-title">Sample blog post</h1>
-                <p class="blog-post-meta">January 1, 2014 by <a href="#">Mark</a></p>
+            <div class="blog-post" th:each="article: ${articles}">
+                <h1 class="blog-post-title" th:text="${article.title}">Sample blog post</h1>
+                <p class="blog-post-meta"><span th:text="${article.date}">January 1, 2014 by </span> <a href="#" th:text="${article.author.user.name}">Mark</a></p>
 
-                <p>This blog post shows a few different types of content that’s supported and styled with Bootstrap.
-                    Basic typography, images, and code are all supported.</p>
+                <h3 th:text="${article.subTitle}">Sub Title</h3>
                 <hr>
-                <p>Cum sociis natoque penatibus et magnis <a href="#">dis parturient montes</a>, nascetur ridiculus mus.
-                    Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed posuere
-                    consectetur est at lobortis. Cras mattis consectetur purus sit amet fermentum.</p>
-                <blockquote>
-                    <p>Curabitur blandit tempus porttitor. <strong>Nullam quis risus eget urna mollis</strong> ornare
-                        vel eu leo. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                </blockquote>
-                <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet
-                    fermentum. Aenean lacinia bibendum nulla sed consectetur.</p></div><!-- /.blog-post -->
+                <p th:text="${article.content}">Cum sociis natoque penatibus et magnis <a href="#">dis parturient montes</a>
+                <!-- /.blog-post -->
 
             <nav class="blog-pagination">
                 <a class="btn btn-outline-primary" href="#"><i class="fas fa-angle-double-left"></i> Older</a>
