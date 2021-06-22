@@ -1,6 +1,7 @@
 package com.murilonerdx.blog.model.article.entity
 
 import com.murilonerdx.blog.model.author.entity.Author
+import com.murilonerdx.blog.model.category.entity.Category
 import java.time.LocalDateTime
 import javax.persistence.*
 
@@ -18,4 +19,6 @@ data class Article(
         var date:LocalDateTime = LocalDateTime.now(),
         @ManyToOne
         var author: Author = Author(),
+        @ManyToOne()
+        var category: Category = Category()
 )

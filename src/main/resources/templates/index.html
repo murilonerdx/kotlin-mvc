@@ -1,6 +1,6 @@
+
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -12,18 +12,11 @@
     <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/blog/">
 
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"/>
-
-    <!-- FontAwesome -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
-          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="../static/images/favicon.png" th:href="@{images/favicon.png}"/>
+    <link rel="icon" type="image/png" href="../static/images/favicon.png" th:href="@{/images/favicon.png}" />
     <meta name="theme-color" content="#563d7c">
-
-
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -43,7 +36,9 @@
     <!-- Custom styles for this template -->
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
     <!-- Custom styles for this template -->
-    <link href="../static/css/blog.css" th:href="@{css/blog.css}" rel="stylesheet"/>
+    <link href="../static/css/blog.css" rel="stylesheet" th:href="@{/css/blog.css}" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 </head>
 <body>
 <div class="container">
@@ -52,42 +47,46 @@
         <div class="row flex-nowrap justify-content-between align-items-center">
             <div class="col-4 pt-1">
                 <a class="text-muted" href="signup.html" th:href="@{/signup}" th:if="${session.currentUser == null}">
-                    <i class="fas fa-id-card"></i>
-                    Subscribe
+                    <i class="fas fa-id-card"></i> <span>Subscribe</span>
                 </a>
             </div>
             <div class="col-4 text-center">
-                <img src="../static/images/blog-logo.png" th:src="@{images/blog-logo.png}" alt="Logo" height="50px"/>
+                <!-- <a class="blog-header-logo text-dark" href="#">Large</a> -->
+                <img src="../static/images/blog-logo.png" th:src="@{/images/blog-logo.png}" alt="Logo" height="50px" />
             </div>
             <div class="col-4 d-flex justify-content-end align-items-center">
-                <a class="btn btn-sm btn-outline-secondary" href="login.html" th:href="@{/login}"
-                   th:if="${session.currentUser == null}">
-                    <i class="fas fa-sign-in-alt"></i>
-                    Sign in
+                <a class="btn btn-sm btn-outline-secondary" href="login.html" th:href="@{/login}" th:if="${session.currentUser == null}">
+                    <i class="fas fa-sign-in-alt"></i> <span>Sign in</span>
                 </a>
 
                 <div class="dropdown" th:if="${session.currentUser != null}">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span th:text="${session.currentUser.name}"/>
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span th:text="${session.currentUser.name}"></span>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">Perfil</a>
-                        <a class="dropdown-item" href="article.html" th:href="@{/article}">Novo artigo</a>
-                        <a class="dropdown-item" href="#">Meus artigos</a>
+                        <a class="dropdown-item" href="article.html" th:href="@{/article}">
+                            Novo Artigo
+                        </a>
+                        <a class="dropdown-item" href="articles-list.html" th:href="@{/article/list/user/{id}(id=${session.currentUser.id})}">Meus Artigos</a>
+                        <a class="dropdown-item" href="articles-list.html" th:href="@{/article/list}">Todos Artigos</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="login.html" th:href="@{/login/logout}">
                             Sair
                         </a>
                     </div>
                 </div>
+
             </div>
         </div>
     </header>
 
     <div class="nav-scroller py-1 mb-2">
         <nav class="nav d-flex justify-content-between">
-            <a class="p-2 text-muted" href="#" th:each="category: ${categories}"><span th:text="${category.name}"></span></a>
+            <a class="p-2 text-muted"
+               href="article-list.html" th:href="@{/article/list/category/{id}(id=${category.id})}"
+               th:each="category: ${categories}">
+                <span th:text="${category.name}">Technology</span>
+            </a>
         </nav>
     </div>
 
@@ -98,56 +97,92 @@
         </div>
     </div>
 
+
 </div>
 
 <main role="main" class="container">
     <div class="row">
         <div class="col-md-8 blog-main">
-            <div class="blog-post" th:each="article: ${articles}">
-                <h1 class="blog-post-title" th:text="${article.title}">Sample blog post</h1>
-                <p class="blog-post-meta"><span th:text="${article.date}">January 1, 2014 by </span> <a href="#" th:text="${article.author.user.name}">Mark</a></p>
 
-                <h3 th:text="${article.subTitle}">Sub Title</h3>
-                <hr>
-                <p th:text="${article.content}">Cum sociis natoque penatibus et magnis <a href="#">dis parturient montes</a>
-                <!-- /.blog-post -->
+            <div class="card blog-post" th:each="article : ${articles}">
 
-            <nav class="blog-pagination">
-                <a class="btn btn-outline-primary" href="#"><i class="fas fa-angle-double-left"></i> Older</a>
-                <a class="btn btn-outline-secondary" href="#" tabindex="-1" aria-disabled="true">Newer <i
-                        class="fas fa-angle-double-right"></i></a>
+                <h1 class="blog-post-title card-header" th:text="${article.title}">
+                    Sample blog post
+                </h1>
+
+                <div class="card-body">
+                    <h5 class="card-title text-muted" th:text="${article.subTitle}">Sub Title</h5>
+                    <p th:text="${article.content}">Content</p>
+                </div>
+
+
+                <div class="card-footer text-muted">
+
+                    <div class="badge badge-secondary">
+                        Autor: <span th:text="${article.author.user.name}">Author</span>
+                    </div>
+
+                    <div class="badge badge-secondary">
+                        Data: <span th:text="${article.date}">Data</span>
+                    </div>
+                    <div class="badge badge-secondary float-right">
+                        Categoria: <span th:text="${article.category.name}">Categoria</span>
+                    </div>
+
+                </div>
+
+            </div><!-- /.blog-post -->
+
+            <nav class="blog-pagination" th:if="${notFoundAuthor}">
+
+                <a class="btn btn-outline-primary"
+                   href="#"
+                   th:href="@{'/?page=' + ${priorPage}}"
+                   th:classappend="${isFirst} ? 'disabled'" >
+                    <i class="fas fa-angle-double-left"></i> <span th:text="${older}">Older</span>
+                </a>
+
+                <a class="btn btn-outline-secondary"
+                   href="#"
+                   th:href="@{'/?page=' + ${nextPage}}"
+                   th:classappend="${isLast} ? 'disabled'" >
+                    <span th:text="${newer}">Newer</span> <i class="fas fa-angle-double-right"></i>
+                </a>
             </nav>
 
         </div><!-- /.blog-main -->
 
         <aside class="col-md-4 blog-sidebar">
-            <div class="p-4 mb-3 bg-light rounded">
-                <h4 class="font-italic" th:text="#{author.about}">
+            <div class="p-4 mb-3 bg-light rounded" th:if="${notFoundAuthor}">
+                <h4 class="font-italic">
                     <i class="fas fa-user"></i>
-                    About Author
+                    <!-- <span th:text="#{author.about}">About Author</span> -->
+                    <span th:text="${author.user.name}">About Author</span>
                 </h4>
-                <p class="mb-0">Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus
-                    sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+                <p class="mb-0" th:text="${author.about}">About Content.</p>
                 <hr/>
-                <h4 class="font-italic" th:text="#{author.socialNetwork}">
-                    <i class="fas fa-network-wired"></i> Social Network
+                <h4 class="font-italic">
+                    <i class="fas fa-network-wired"></i> <span th:text="#{author.socialNetwork}">Social Network</span>
                 </h4>
                 <ol class="list-unstyled">
-                    <li><a href="#"><i class="fab fa-facebook-f"></i> Facebook</a></li>
-                    <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
-                    <li><a href="#"><i class="fab fa-linkedin-in"></i> LinkedIn</a></li>
+                    <li>
+                        <a href="#">
+                            <i class="fab fa-facebook-f"></i> Facebook
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fab fa-twitter"></i> Twitter
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fab fa-linkedin-in"></i> LinkedIn
+                        </a>
+                    </li>
                 </ol>
             </div>
 
-            <div class="p-4">
-                <h4 class="font-italic" th:text="#{articles.history}"><i class="fas fa-list"></i> Archives</h4>
-                <ol class="list-unstyled mb-0">
-                    <li><a href="#">March 2014</a></li>
-                    <li><a href="#">February 2014</a></li>
-                    <li><a href="#">January 2014</a></li>
-                    <li><a href="#">December 2013</a></li>
-                </ol>
-            </div>
         </aside><!-- /.blog-sidebar -->
 
     </div><!-- /.row -->
@@ -156,20 +191,15 @@
 
 <footer class="blog-footer">
     <p>
-        <a href="#">
-            <i class="fas fa-angle-double-up"></i> Back to top <i class="fas fa-angle-double-up"></i>
-        </a>
+        <a href="#">Back to top</a>
     </p>
 </footer>
-</body>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
-        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
-        crossorigin="anonymous"></script>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+</body>
 </html>
